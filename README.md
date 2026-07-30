@@ -1,9 +1,8 @@
 # 💊 Farmácia API
 
-API REST desenvolvida durante o **Bootcamp Java Full Stack da Generation Brasil**.
-O projeto consiste em um sistema de **Comércio Eletrônico de uma Farmácia**, permitindo o gerenciamento de categorias e produtos através de operações CRUD.
+API REST desenvolvida para um sistema de comércio eletrônico de uma farmácia, permitindo o gerenciamento de categorias e produtos, com relacionamento entre entidades, persistência em banco de dados e autenticação de usuários utilizando Spring Security e JWT.
 
-A aplicação foi construída utilizando **Java e Spring Boot**, aplicando conceitos de arquitetura REST, persistência de dados com JPA/Hibernate e relacionamento entre entidades.
+O projeto foi desenvolvido durante o **Bootcamp Java Full Stack da Generation Brasil**, aplicando conceitos de desenvolvimento backend com Java e Spring Boot.
 
 ---
 
@@ -11,156 +10,174 @@ A aplicação foi construída utilizando **Java e Spring Boot**, aplicando conce
 
 * Java
 * Spring Boot
-* Spring Web
 * Spring Data JPA
 * Hibernate
+* Spring Security
+* JWT (JSON Web Token)
 * MySQL
 * Maven
 * Jakarta Validation
 * Git e GitHub
-* Insomnia
+* Insomnia para testes da API
 
 ---
 
 ## 📌 Funcionalidades
 
-### Categorias
+### 🔹 Categoria
 
-* Cadastrar categoria
+CRUD completo de categorias:
+
 * Listar todas as categorias
 * Buscar categoria por ID
-* Buscar categorias pelo tipo
+* Buscar categorias por tipo
+* Cadastrar categoria
 * Atualizar categoria
 * Remover categoria
 
-### Produtos
+---
 
-* Cadastrar produto
+### 🔹 Produto
+
+CRUD completo de produtos:
+
 * Listar todos os produtos
 * Buscar produto por ID
-* Buscar produtos pelo nome
+* Buscar produtos por nome
+* Cadastrar produto
 * Atualizar produto
 * Remover produto
 
 ---
 
-## 🔗 Relacionamento entre entidades
+### 🔹 Relacionamento
 
-O projeto possui um relacionamento **Um para Muitos (1:N)** entre Categoria e Produto.
+O sistema possui relacionamento entre:
 
-```
-Categoria
-    |
-    | 1
-    |
-    | N
-Produto
-```
+**Categoria (1) → (N) Produtos**
 
-Uma categoria pode possuir vários produtos, enquanto cada produto pertence a uma única categoria.
+Uma categoria pode possuir vários produtos, enquanto cada produto pertence a uma categoria.
 
 ---
 
-## 🗂️ Modelo de dados
+## 🔐 Autenticação e Segurança
 
-### Categoria
+Implementação de autenticação utilizando:
 
-| Campo | Tipo   |
-| ----- | ------ |
-| id    | Long   |
-| tipo  | String |
+* Spring Security
+* JWT
+* BCrypt para criptografia de senhas
 
-### Produto
+Funcionalidades:
 
-| Campo     | Tipo       |
-| --------- | ---------- |
-| id        | Long       |
-| nome      | String     |
-| preco     | BigDecimal |
-| estoque   | Integer    |
-| foto      | String     |
-| categoria | Categoria  |
+* Cadastro de usuários
+* Login com geração de token JWT
+* Proteção dos endpoints da API
+* Controle de acesso através de autenticação por token
 
 ---
 
-## 📁 Estrutura do projeto
+## 🗂️ Estrutura do projeto
 
 ```
 src/main/java/com/generation/farmacia
 
 ├── controller
-│   ├── CategoriaController.java
-│   └── ProdutoController.java
+│   ├── CategoriaController
+│   ├── ProdutoController
+│   └── UsuarioController
 │
 ├── model
-│   ├── Categoria.java
-│   └── Produto.java
+│   ├── Categoria
+│   ├── Produto
+│   ├── Usuario
+│   └── UsuarioLogin
 │
 ├── repository
-│   ├── CategoriaRepository.java
-│   └── ProdutoRepository.java
+│   ├── CategoriaRepository
+│   ├── ProdutoRepository
+│   └── UsuarioRepository
 │
-└── FarmaciaApplication.java
+├── service
+│   └── UsuarioService
+│
+└── security
+    ├── SecurityConfig
+    ├── JwtService
+    ├── JwtAuthFilter
+    ├── UserDetailsImpl
+    └── UserDetailsServiceImpl
 ```
 
 ---
 
-## ⚙️ Configuração do banco de dados
+## 🛢️ Banco de dados
 
 Banco utilizado:
 
 ```
-db_farmacia
+MySQL
 ```
 
-Configuração no arquivo `application.properties`:
+Principais tabelas:
+
+* `tb_categorias`
+* `tb_produtos`
+* `tb_usuarios`
+
+---
+
+## 🧪 Testes
+
+A API foi testada utilizando o Insomnia, validando:
+
+✅ Cadastro e autenticação de usuários
+✅ Geração e validação de token JWT
+✅ Operações CRUD de categorias
+✅ Operações CRUD de produtos
+✅ Relacionamento entre produtos e categorias
+
+---
+
+## 📍 Endpoints principais
+
+### Usuários
 
 ```
-spring.datasource.url=jdbc:mysql://localhost/db_farmacia
-spring.datasource.username=root
-spring.datasource.password=root
+POST /usuarios/cadastrar
+POST /usuarios/logar
+```
+
+### Categorias
+
+```
+GET    /categorias
+GET    /categorias/{id}
+GET    /categorias/tipo/{tipo}
+POST   /categorias
+PUT    /categorias
+DELETE /categorias/{id}
+```
+
+### Produtos
+
+```
+GET    /produtos
+GET    /produtos/{id}
+GET    /produtos/nome/{nome}
+POST   /produtos
+PUT    /produtos
+DELETE /produtos/{id}
 ```
 
 ---
 
-## 🧪 Testes da API
-
-Os testes dos endpoints foram realizados utilizando o Insomnia.
-
-Principais rotas:
-
-### Categoria
-
-```
-GET     /categorias
-GET     /categorias/{id}
-GET     /categorias/tipo/{tipo}
-POST    /categorias
-PUT     /categorias
-DELETE  /categorias/{id}
-```
-
-### Produto
-
-```
-GET     /produtos
-GET     /produtos/{id}
-GET     /produtos/nome/{nome}
-POST    /produtos
-PUT     /produtos
-DELETE  /produtos/{id}
-```
-
----
-
-## 👩‍💻 Desenvolvimento
-
-Projeto desenvolvido individualmente como parte do **Performance Goal Check - Bloco 02** do Bootcamp Java Full Stack da Generation Brasil.
-
----
-
-## Autora
+## 👩‍💻 Desenvolvido por
 
 **Maryane Praxedes**
 
-GitHub: https://github.com/marypraxedes
+Estudante de Engenharia de Software | Desenvolvedora Java Backend
+
+🔗 GitHub: https://github.com/marypraxedes
+
+🔗 LinkedIn: https://www.linkedin.com/marypraxedes
